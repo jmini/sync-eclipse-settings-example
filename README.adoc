@@ -1,0 +1,43 @@
+//tag::vardef[]
+:gh-repo-owner: jmini
+:gh-repo-name: sync-eclipse-settings-example
+
+:project-name: Sync eclipse-settings example
+:git-branch: master
+:twitter-handle: j2r2b
+:license: http://www.eclipse.org/legal/epl-v10.html
+:license-name: Eclipse Public License - v 1.0
+
+:git-repository: {gh-repo-owner}/{gh-repo-name}
+:homepage: https://{gh-repo-owner}.github.io/{gh-repo-name}
+:issues: https://github.com/{git-repository}/issues
+:consumer-folder-name: consumer
+:consumer-folder-url: https://github.com/{git-repository}/tree/{git-branch}/{consumer-folder-name}
+//end::vardef[]
+
+//tag::header[]
+= {project-name}
+Example usages of the eclipse-settings-maven-plugin
+//end::header[]
+
+//tag::description[]
+== Description
+This repository demonstrate how you can use the goal `eclipse-settings` of the link:https://mvnrepository.com/artifact/org.eclipse.scout/eclipse-settings-maven-plugin[eclipse-settings-maven-plugin] to synchronize the eclipse-settings files beetween multiple project.
+The `*.prefs` files are stored inside a maven artifact and then copied to each `.setting` folder of each project making use the the projects.
+
+//end::description[]
+Read more on the link:{homepage}[project home page].
+
+//tag::contact-section[]
+== Get in touch
+
+Use the link:{issues}[{project-name} issue tracker] on GitHub.
+
+You can also contact me on Twitter: link:https://twitter.com/{twitter-handle}[@{twitter-handle}]
+//end::contact-section[]
+
+//tag::license-section[]
+== License
+
+link:{license}[{license-name}]
+//end::license-section[]

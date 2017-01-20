@@ -1,0 +1,24 @@
+:github-readme: ../README.adoc
+
+include::{github-readme}[tags=vardef]
+
+:projectpage: https://github.com/{git-repository}
+
+include::{github-readme}[tags=header]
+
+== URLs
+
+* link:{homepage}[Project home] (this page)
+* link:{projectpage}[GitHub project]
+* link:{issues}[Issue tracker]
+
+TIP: Do you want to improve this page? Please git-link:self[edit it on GitHub].
+
+include::{github-readme}[tags=description]
+
+NOTE: TODO add a description
+
+include::{github-readme}[tags=contact-section]
+
+include::{github-readme}[tags=license-section]
+
