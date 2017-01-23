@@ -68,6 +68,7 @@
                         <idprefix/>
                         <idseparator>-</idseparator>
                         <docinfo1>true</docinfo1>
+                        <imagesdir/>
                         <sourcedir>${project.build.sourceDirectory}</sourcedir>
                         <project-version>${project.version}</project-version>
                     </attributes>

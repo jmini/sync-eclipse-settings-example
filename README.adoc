@@ -11,8 +11,8 @@
 :git-repository: {gh-repo-owner}/{gh-repo-name}
 :homepage: https://{gh-repo-owner}.github.io/{gh-repo-name}
 :issues: https://github.com/{git-repository}/issues
-:consumer-folder-name: consumer
-:consumer-folder-url: https://github.com/{git-repository}/tree/{git-branch}/{consumer-folder-name}
+:example-folder-name: example-use
+:example-folder-url: https://github.com/{git-repository}/tree/{git-branch}/{example-folder-name}
 //end::vardef[]
 
 //tag::header[]
@@ -22,8 +22,11 @@ Example usages of the eclipse-settings-maven-plugin
 
 //tag::description[]
 == Description
-This repository demonstrate how you can use the goal `eclipse-settings` of the link:https://mvnrepository.com/artifact/org.eclipse.scout/eclipse-settings-maven-plugin[eclipse-settings-maven-plugin] to synchronize the eclipse-settings files beetween multiple project.
-The `*.prefs` files are stored inside a maven artifact and then copied to each `.setting` folder of each project making use the the projects.
+This repository demonstrates how you can use the goal `eclipse-settings` of the link:https://mvnrepository.com/artifact/org.eclipse.scout/eclipse-settings-maven-plugin[eclipse-settings-maven-plugin] to synchronize the eclipse-settings files between multiple project.
+The `*.prefs` files stored inside a maven artifact are extracted each `.setting` folder of each project using the maven plugin.
+
+This repository provides some example projects that use the maven plugin.
+They are located in the link:{example-folder-url}[{example-folder-name}] folder.
 
 //end::description[]
 Read more on the link:{homepage}[project home page].
