@@ -110,27 +110,39 @@ image::import.png[Import existing projects configuration]
 ==== Setup
 
 The parent project is configured to generate 4 `*.prefs` files inside each `.settings` folder.
-See the `pluginManagement` section of the git-link:example-use/pom.xml[parent pom].
 
 * `org.eclipse.core.resources.prefs`
 * `org.eclipse.jdt.core.prefs`
 * `org.eclipse.jdt.ui.prefs`
 * `org.eclipse.m2e.core.prefs`
 
-The corresponding configuration is provided here:
+This section provides a step-by-step overview of the configuration.
+You can also refer directly to the `pluginManagement` section of the git-link:example-use/pom.xml[parent pom].
+
+The configuration is similar to any maven plugin:
 
 [source,xml]
 ----
-include::../example-use/pom.xml[tags="config", indent=0]
+include::../example-use/pom.xml[tags="plugin", indent=0]
 ----
 
-As source we are using the files provided by the `org.eclipse.scout.rt-settings` artifact of the Eclipse Scout project.
+In this example the different `*.prefs` files should be copied from link:http://mvnrepository.com/artifact/org.eclipse.scout.rt/org.eclipse.scout.rt-settings[org.eclipse.scout.rt-settings] artifact of the Eclipse Scout project.
 This artifact is defined as a dependency of the `eclipse-settings-maven-plugin` itself (and not of the parent project).
 
 [source,xml]
 ----
 include::../example-use/pom.xml[tags="dep", indent=0]
 ----
+
+In the configuration section, the location of each `*.prefs` that will be copied to each project is defined.
+In this case, the 4 files should be moved to the `.settings` folder.
+
+[source,xml]
+----
+include::../example-use/pom.xml[tags="config", indent=0]
+----
+
+
 
 Because the `eclipse-settings-maven-plugin` is configured in the `pluginManagement` section, the configuration will be applied for all children of the parent pom.
 
