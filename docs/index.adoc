@@ -24,11 +24,14 @@ From a maven point of view you have:
 * a git-link:example-use/pom.xml[parent pom file] and several child artifacts:
   - git-link:example-use/project1/pom.xml[project1 pom file]
   - git-link:example-use/project2/pom.xml[project2 pom file]
-  - git-link:example-use/wrong1/pom.xml[wrong1 pom file] (that contains a compile error on purpose)
+  - git-link:example-use/wrong1/pom.xml[wrong1 pom file] (contains a compile error on purpose)
+  - git-link:example-use/skipped1/pom.xml[skipped1 pom file] (is not an eclipse project on purpose)
 * another aggregator artifact git-link:example-use/other/pom.xml[other pom file] that has not `parent` as parent pom.
 
 To make the maven structure a little more complex, the parent pom only aggregates `project1` and `project2` and not `wrong1`.
-The `other` pom aggregates `parent` and `wrong1`
+The `other` pom aggregates `parent`, `wrong1` and `skipped1`.
+
+`project1` is a dependency of `project2`.
 
 ==== Compile at the root
 
@@ -81,6 +84,7 @@ The build result should be:
 [INFO] project1 ........................................... SUCCESS [  2.219 s]
 [INFO] project2 ........................................... SUCCESS [  0.033 s]
 [INFO] wrong1 ............................................. FAILURE [  0.775 s]
+[INFO] skipped1 ........................................... SKIPPED
 [INFO] other .............................................. SKIPPED
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
@@ -89,7 +93,8 @@ The build result should be:
 
 ==== Compile each project individually
 
-Of course because all projects are really basic, without any dependencies they can be compiled individually.
+Of course because all projects are really basic, they can be compiled individually.
+To build `project2` you need to have installed `project1` in your local maven repository.
 
 === Projects in Eclipse IDE
 
@@ -142,9 +147,15 @@ In this case, the 4 files should be moved to the `.settings` folder.
 include::../example-use/pom.xml[tags="config", indent=0]
 ----
 
-
-
 Because the `eclipse-settings-maven-plugin` is configured in the `pluginManagement` section, the configuration will be applied for all children of the parent pom.
+
+There is one exception in the `skipped1` project: this child pom is additionally configured to skip the configuration made in the parent pom.
+
+[source,xml]
+----
+include::../example-use/skipped1/pom.xml[tags="skip-plugin", indent=0]
+----
+
 
 ==== Sync the prefs files
 
@@ -181,21 +192,21 @@ The maven log looks like this:
 [INFO] Building parent 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.1:eclipse-settings (default-cli) @ parent ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ parent ---
 [INFO] Project configured.
 [INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] Building project1 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.1:eclipse-settings (default-cli) @ project1 ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ project1 ---
 [INFO] Project configured.
 [INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] Building project2 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.1:eclipse-settings (default-cli) @ project2 ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ project2 ---
 [INFO] Project configured.
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary:
@@ -208,7 +219,7 @@ The maven log looks like this:
 [INFO] ------------------------------------------------------------------------
 ----
 
-If the same goal is called  in the git-link:example-use/other/[other project] like this:
+If the same goal is called in the git-link:example-use/other/[other project] like this:
 
 ----
 cd example-use/other
@@ -217,6 +228,20 @@ mvn org.eclipse.scout:eclipse-settings-maven-plugin:eclipse-settings
 
 The settings files will be synchronized the `parent`, `project1`, `project2` and `wrong1` projects.
 This will be the case even if the `wrong1` project cannot be compiled due to a compile error.
+
+In the project `skipped1`, no settings files will be copied, because the project is configured to ignore the configuration made in the parent pom.
+The maven log for the `skipped1` artifact looks like this:
+
+----
+[INFO] ------------------------------------------------------------------------
+[INFO] Building skipped1 1.0
+[INFO] ------------------------------------------------------------------------
+[INFO]
+[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ skipped1 ---
+[INFO] Skipping project settings configuration.
+[INFO]
+----
+
 In the `other` project, no settings file will be generated, because nothing is configured (`other` do not have `parent` as parent pom).
 The maven log for the `other` artifact looks like this:
 
@@ -225,7 +250,7 @@ The maven log for the `other` artifact looks like this:
 [INFO] Building other 1.9
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.1:eclipse-settings (default-cli) @ other ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ other ---
 [WARNING] No settings specified.
 [ERROR] Project not configured.
 ----

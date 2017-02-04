@@ -12,6 +12,7 @@
 	<modules>
 		<module>../</module>
 		<module>../wrong1</module>
+		<module>../skipped1</module>
 	</modules>
 
 </project>

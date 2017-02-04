@@ -10,13 +10,19 @@
 		<version>1.0</version>
 	</parent>
 
-	<artifactId>project2</artifactId>
+	<artifactId>skipped1</artifactId>
 
-	<dependencies>
-		<dependency>
-			<groupId>example</groupId>
-			<artifactId>project1</artifactId>
-			<version>1.0</version>
-		</dependency>
-	</dependencies>
+	<build>
+		<plugins>
+			<!--tag::skip-plugin[] -->
+			<plugin>
+				<groupId>org.eclipse.scout</groupId>
+				<artifactId>eclipse-settings-maven-plugin</artifactId>
+				<configuration>
+					<skip>true</skip>
+				</configuration>
+			</plugin>
+			<!--end::skip-plugin[] -->
+		</plugins>
+	</build>
 </project>
