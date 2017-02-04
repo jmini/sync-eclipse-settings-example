@@ -577,7 +577,10 @@ They are located in the <a href="https://github.com/jmini/sync-eclipse-settings-
 <p><a href="https://github.com/jmini/sync-eclipse-settings-example/blob/master/example-use/project2/pom.xml">project2 pom file</a></p>
 </li>
 <li>
-<p><a href="https://github.com/jmini/sync-eclipse-settings-example/blob/master/example-use/wrong1/pom.xml">wrong1 pom file</a> (that contains a compile error on purpose)</p>
+<p><a href="https://github.com/jmini/sync-eclipse-settings-example/blob/master/example-use/wrong1/pom.xml">wrong1 pom file</a> (contains a compile error on purpose)</p>
+</li>
+<li>
+<p><a href="https://github.com/jmini/sync-eclipse-settings-example/blob/master/example-use/skipped1/pom.xml">skipped1 pom file</a> (is not an eclipse project on purpose)</p>
 </li>
 </ul>
 </div>
@@ -589,7 +592,10 @@ They are located in the <a href="https://github.com/jmini/sync-eclipse-settings-
 </div>
 <div class="paragraph">
 <p>To make the maven structure a little more complex, the parent pom only aggregates <code>project1</code> and <code>project2</code> and not <code>wrong1</code>.
-The <code>other</code> pom aggregates <code>parent</code> and <code>wrong1</code></p>
+The <code>other</code> pom aggregates <code>parent</code>, <code>wrong1</code> and <code>skipped1</code>.</p>
+</div>
+<div class="paragraph">
+<p><code>project1</code> is a dependency of <code>project2</code>.</p>
 </div>
 <div class="sect3">
 <h4 id="compile-at-the-root"><a class="anchor" href="#compile-at-the-root"></a>Compile at the root</h4>
@@ -651,6 +657,7 @@ The build result should be:</p>
 [INFO] project1 ........................................... SUCCESS [  2.219 s]
 [INFO] project2 ........................................... SUCCESS [  0.033 s]
 [INFO] wrong1 ............................................. FAILURE [  0.775 s]
+[INFO] skipped1 ........................................... SKIPPED
 [INFO] other .............................................. SKIPPED
 [INFO] ------------------------------------------------------------------------
 [INFO] BUILD FAILURE
@@ -661,7 +668,8 @@ The build result should be:</p>
 <div class="sect3">
 <h4 id="compile-each-project-individually"><a class="anchor" href="#compile-each-project-individually"></a>Compile each project individually</h4>
 <div class="paragraph">
-<p>Of course because all projects are really basic, without any dependencies they can be compiled individually.</p>
+<p>Of course because all projects are really basic, they can be compiled individually.
+To build <code>project2</code> you need to have installed <code>project1</code> in your local maven repository.</p>
 </div>
 </div>
 </div>
@@ -693,8 +701,7 @@ You should see the list of projects and you can materialize them in the workspac
 <div class="sect3">
 <h4 id="setup"><a class="anchor" href="#setup"></a>Setup</h4>
 <div class="paragraph">
-<p>The parent project is configured to generate 4 <code>*.prefs</code> files inside each <code>.settings</code> folder.
-See the <code>pluginManagement</code> section of the <a href="https://github.com/jmini/sync-eclipse-settings-example/blob/master/example-use/pom.xml">parent pom</a>.</p>
+<p>The parent project is configured to generate 4 <code>*.prefs</code> files inside each <code>.settings</code> folder.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -713,47 +720,82 @@ See the <code>pluginManagement</code> section of the <a href="https://github.com
 </ul>
 </div>
 <div class="paragraph">
-<p>The corresponding configuration is provided here:</p>
+<p>This section provides a step-by-step overview of the configuration.
+You can also refer directly to the <code>pluginManagement</code> section of the <a href="https://github.com/jmini/sync-eclipse-settings-example/blob/master/example-use/pom.xml">parent pom</a>.</p>
+</div>
+<div class="paragraph">
+<p>The configuration is similar to any maven plugin:</p>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;configuration&gt;</span>
-  <span class="tag">&lt;additionalConfig&gt;</span>
-    <span class="tag">&lt;file&gt;</span>
-      <span class="tag">&lt;name&gt;</span>.settings/org.eclipse.core.resources.prefs<span class="tag">&lt;/name&gt;</span>
-      <span class="tag">&lt;location&gt;</span>/org.eclipse.core.resources.prefs<span class="tag">&lt;/location&gt;</span>
-    <span class="tag">&lt;/file&gt;</span>
-    <span class="tag">&lt;file&gt;</span>
-      <span class="tag">&lt;name&gt;</span>.settings/org.eclipse.jdt.core.prefs<span class="tag">&lt;/name&gt;</span>
-      <span class="tag">&lt;location&gt;</span>/org.eclipse.jdt.core.prefs<span class="tag">&lt;/location&gt;</span>
-    <span class="tag">&lt;/file&gt;</span>
-    <span class="tag">&lt;file&gt;</span>
-      <span class="tag">&lt;name&gt;</span>.settings/org.eclipse.jdt.ui.prefs<span class="tag">&lt;/name&gt;</span>
-      <span class="tag">&lt;location&gt;</span>/org.eclipse.jdt.ui.prefs<span class="tag">&lt;/location&gt;</span>
-    <span class="tag">&lt;/file&gt;</span>
-    <span class="tag">&lt;file&gt;</span>
-      <span class="tag">&lt;name&gt;</span>.settings/org.eclipse.m2e.core.prefs<span class="tag">&lt;/name&gt;</span>
-      <span class="tag">&lt;location&gt;</span>/org.eclipse.m2e.core.prefs<span class="tag">&lt;/location&gt;</span>
-    <span class="tag">&lt;/file&gt;</span>
-  <span class="tag">&lt;/additionalConfig&gt;</span>
-<span class="tag">&lt;/configuration&gt;</span></code></pre>
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;plugin&gt;</span>
+        <span class="tag">&lt;groupId&gt;</span>org.eclipse.scout<span class="tag">&lt;/groupId&gt;</span>
+        <span class="tag">&lt;artifactId&gt;</span>eclipse-settings-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+        <span class="tag">&lt;version&gt;</span>3.0.2<span class="tag">&lt;/version&gt;</span>
+        <span class="tag">&lt;dependencies&gt;</span>
+                <span class="comment">&lt;!-- ... add dependencies here: source for the .settings files ... --&gt;</span>
+        <span class="tag">&lt;/dependencies&gt;</span>
+        <span class="comment">&lt;!-- ... add configuration here ... --&gt;</span>
+<span class="tag">&lt;/plugin&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
-<p>As source we are using the files provided by the <code>org.eclipse.scout.rt-settings</code> artifact of the Eclipse Scout project.
+<p>In this example the different <code>*.prefs</code> files should be copied from <a href="http://mvnrepository.com/artifact/org.eclipse.scout.rt/org.eclipse.scout.rt-settings">org.eclipse.scout.rt-settings</a> artifact of the Eclipse Scout project.
 This artifact is defined as a dependency of the <code>eclipse-settings-maven-plugin</code> itself (and not of the parent project).</p>
 </div>
 <div class="listingblock">
 <div class="content">
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;dependency&gt;</span>
-  <span class="tag">&lt;groupId&gt;</span>org.eclipse.scout.rt<span class="tag">&lt;/groupId&gt;</span>
-  <span class="tag">&lt;artifactId&gt;</span>org.eclipse.scout.rt-settings<span class="tag">&lt;/artifactId&gt;</span>
-  <span class="tag">&lt;version&gt;</span>6.0.200.0<span class="tag">&lt;/version&gt;</span>
+        <span class="tag">&lt;groupId&gt;</span>org.eclipse.scout.rt<span class="tag">&lt;/groupId&gt;</span>
+        <span class="tag">&lt;artifactId&gt;</span>org.eclipse.scout.rt-settings<span class="tag">&lt;/artifactId&gt;</span>
+        <span class="tag">&lt;version&gt;</span>6.0.200.0<span class="tag">&lt;/version&gt;</span>
 <span class="tag">&lt;/dependency&gt;</span></code></pre>
 </div>
 </div>
 <div class="paragraph">
+<p>In the configuration section, the location of each <code>*.prefs</code> that will be copied to each project is defined.
+In this case, the 4 files should be moved to the <code>.settings</code> folder.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;configuration&gt;</span>
+        <span class="tag">&lt;additionalConfig&gt;</span>
+                <span class="tag">&lt;file&gt;</span>
+                        <span class="tag">&lt;name&gt;</span>.settings/org.eclipse.core.resources.prefs<span class="tag">&lt;/name&gt;</span>
+                        <span class="tag">&lt;location&gt;</span>/org.eclipse.core.resources.prefs<span class="tag">&lt;/location&gt;</span>
+                <span class="tag">&lt;/file&gt;</span>
+                <span class="tag">&lt;file&gt;</span>
+                        <span class="tag">&lt;name&gt;</span>.settings/org.eclipse.jdt.core.prefs<span class="tag">&lt;/name&gt;</span>
+                        <span class="tag">&lt;location&gt;</span>/org.eclipse.jdt.core.prefs<span class="tag">&lt;/location&gt;</span>
+                <span class="tag">&lt;/file&gt;</span>
+                <span class="tag">&lt;file&gt;</span>
+                        <span class="tag">&lt;name&gt;</span>.settings/org.eclipse.jdt.ui.prefs<span class="tag">&lt;/name&gt;</span>
+                        <span class="tag">&lt;location&gt;</span>/org.eclipse.jdt.ui.prefs<span class="tag">&lt;/location&gt;</span>
+                <span class="tag">&lt;/file&gt;</span>
+                <span class="tag">&lt;file&gt;</span>
+                        <span class="tag">&lt;name&gt;</span>.settings/org.eclipse.m2e.core.prefs<span class="tag">&lt;/name&gt;</span>
+                        <span class="tag">&lt;location&gt;</span>/org.eclipse.m2e.core.prefs<span class="tag">&lt;/location&gt;</span>
+                <span class="tag">&lt;/file&gt;</span>
+        <span class="tag">&lt;/additionalConfig&gt;</span>
+<span class="tag">&lt;/configuration&gt;</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
 <p>Because the <code>eclipse-settings-maven-plugin</code> is configured in the <code>pluginManagement</code> section, the configuration will be applied for all children of the parent pom.</p>
+</div>
+<div class="paragraph">
+<p>There is one exception in the <code>skipped1</code> project: this child pom is additionally configured to skip the configuration made in the parent pom.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;plugin&gt;</span>
+        <span class="tag">&lt;groupId&gt;</span>org.eclipse.scout<span class="tag">&lt;/groupId&gt;</span>
+        <span class="tag">&lt;artifactId&gt;</span>eclipse-settings-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
+        <span class="tag">&lt;configuration&gt;</span>
+                <span class="tag">&lt;skip&gt;</span>true<span class="tag">&lt;/skip&gt;</span>
+        <span class="tag">&lt;/configuration&gt;</span>
+<span class="tag">&lt;/plugin&gt;</span></code></pre>
+</div>
 </div>
 </div>
 <div class="sect3">
@@ -798,21 +840,21 @@ The maven log looks like this:</p>
 [INFO] Building parent 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.1:eclipse-settings (default-cli) @ parent ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ parent ---
 [INFO] Project configured.
 [INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] Building project1 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.1:eclipse-settings (default-cli) @ project1 ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ project1 ---
 [INFO] Project configured.
 [INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] Building project2 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.1:eclipse-settings (default-cli) @ project2 ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ project2 ---
 [INFO] Project configured.
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary:
@@ -826,7 +868,7 @@ The maven log looks like this:</p>
 </div>
 </div>
 <div class="paragraph">
-<p>If the same goal is called  in the <a href="https://github.com/jmini/sync-eclipse-settings-example/tree/master/example-use/other">other project</a> like this:</p>
+<p>If the same goal is called in the <a href="https://github.com/jmini/sync-eclipse-settings-example/tree/master/example-use/other">other project</a> like this:</p>
 </div>
 <div class="listingblock">
 <div class="content">
@@ -836,8 +878,25 @@ mvn org.eclipse.scout:eclipse-settings-maven-plugin:eclipse-settings</pre>
 </div>
 <div class="paragraph">
 <p>The settings files will be synchronized the <code>parent</code>, <code>project1</code>, <code>project2</code> and <code>wrong1</code> projects.
-This will be the case even if the <code>wrong1</code> project cannot be compiled due to a compile error.
-In the <code>other</code> project, no settings file will be generated, because nothing is configured (<code>other</code> do not have <code>parent</code> as parent pom).
+This will be the case even if the <code>wrong1</code> project cannot be compiled due to a compile error.</p>
+</div>
+<div class="paragraph">
+<p>In the project <code>skipped1</code>, no settings files will be copied, because the project is configured to ignore the configuration made in the parent pom.
+The maven log for the <code>skipped1</code> artifact looks like this:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[INFO] ------------------------------------------------------------------------
+[INFO] Building skipped1 1.0
+[INFO] ------------------------------------------------------------------------
+[INFO]
+[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ skipped1 ---
+[INFO] Skipping project settings configuration.
+[INFO]</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>In the <code>other</code> project, no settings file will be generated, because nothing is configured (<code>other</code> do not have <code>parent</code> as parent pom).
 The maven log for the <code>other</code> artifact looks like this:</p>
 </div>
 <div class="listingblock">
@@ -846,7 +905,7 @@ The maven log for the <code>other</code> artifact looks like this:</p>
 [INFO] Building other 1.9
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.1:eclipse-settings (default-cli) @ other ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ other ---
 [WARNING] No settings specified.
 [ERROR] Project not configured.</pre>
 </div>
@@ -899,7 +958,7 @@ Select the <a href="https://github.com/jmini/sync-eclipse-settings-example/blob/
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-01-23 15:18:15 CET
+Last updated 2017-02-04 10:28:07 CET
 </div>
 </div>
 </body>
