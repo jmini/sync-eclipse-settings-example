@@ -26,7 +26,7 @@ From a maven point of view you have:
   - git-link:example-use/project2/pom.xml[project2 pom file]
   - git-link:example-use/wrong1/pom.xml[wrong1 pom file] (contains a compile error on purpose)
   - git-link:example-use/skipped1/pom.xml[skipped1 pom file] (is not an eclipse project on purpose)
-* another aggregator artifact git-link:example-use/other/pom.xml[other pom file] that has not `parent` as parent pom.
+* another aggregator artifact git-link:example-use/other/pom.xml[other pom file] that doesn't have `parent` as parent pom.
 
 To make the maven structure a little more complex, the parent pom only aggregates `project1` and `project2` and not `wrong1`.
 The `other` pom aggregates `parent`, `wrong1` and `skipped1`.
@@ -100,7 +100,7 @@ To build `project2` you need to have installed `project1` in your local maven re
 
 The artifacts can of course be imported into Eclipse IDE.
 Each of them is a valid Eclipse project.
-The project metadata were added to the git repository (`.project` and `.classpath` files):
+The requested metadata files (`.project` and `.classpath`) are contained in the git repository:
 
 image::package-explorer.png[Eclipse Package Explorer]
 
@@ -114,7 +114,7 @@ image::import.png[Import existing projects configuration]
 
 ==== Setup
 
-The parent project is configured to generate 4 `*.prefs` files inside each `.settings` folder.
+The parent project is configured to generate four `*.prefs` files inside each `.settings` folder.
 
 * `org.eclipse.core.resources.prefs`
 * `org.eclipse.jdt.core.prefs`

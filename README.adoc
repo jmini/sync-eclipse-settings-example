@@ -22,8 +22,8 @@ Example usages of the eclipse-settings-maven-plugin
 
 //tag::description[]
 == Description
-This repository demonstrates how you can use the goal `eclipse-settings` of the link:https://mvnrepository.com/artifact/org.eclipse.scout/eclipse-settings-maven-plugin[eclipse-settings-maven-plugin] to synchronize the eclipse-settings files between multiple project.
-The `*.prefs` files stored inside a maven artifact are extracted each `.setting` folder of each project using the maven plugin.
+This repository demonstrates how you can use the goal `eclipse-settings` of the link:https://mvnrepository.com/artifact/org.eclipse.scout/eclipse-settings-maven-plugin[eclipse-settings-maven-plugin] (link:https://github.com/BSI-Business-Systems-Integration-AG/eclipse-settings-maven-plugin[GitHub]) to synchronize the eclipse-settings files between multiple projects.
+The `*.prefs` files stored inside a maven artifact are extracted into each `.setting` folder of each project using the maven plugin.
 
 This repository provides some example projects that use the maven plugin.
 They are located in the link:{example-folder-url}[{example-folder-name}] folder.
