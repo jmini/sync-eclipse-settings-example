@@ -192,21 +192,21 @@ The maven log looks like this:
 [INFO] Building parent 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ parent ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.3:eclipse-settings (default-cli) @ parent ---
 [INFO] Project configured.
 [INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] Building project1 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ project1 ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.3:eclipse-settings (default-cli) @ project1 ---
 [INFO] Project configured.
 [INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] Building project2 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ project2 ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.3:eclipse-settings (default-cli) @ project2 ---
 [INFO] Project configured.
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary:
@@ -237,7 +237,7 @@ The maven log for the `skipped1` artifact looks like this:
 [INFO] Building skipped1 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ skipped1 ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.3:eclipse-settings (default-cli) @ skipped1 ---
 [INFO] Skipping project settings configuration.
 [INFO]
 ----
@@ -250,7 +250,7 @@ The maven log for the `other` artifact looks like this:
 [INFO] Building other 1.9
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ other ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.3:eclipse-settings (default-cli) @ other ---
 [WARNING] No settings specified.
 [ERROR] Project not configured.
 ----

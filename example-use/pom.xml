@@ -14,7 +14,7 @@
 		<module>project2</module>
 	</modules>
 
-	<!-- uncomment to fetch the "eclipse-settings-maven-plugin" from bintray (and not from "maven central")
+	<!-- This configuration allows to fetch "eclipse-settings-maven-plugin" from bintray (and not from "maven central") -->
 	<pluginRepositories>
 		<pluginRepository>
 			<id>bintray.bsi.maven</id>
@@ -27,7 +27,6 @@
 			</snapshots>
 		</pluginRepository>
 	</pluginRepositories>
-	-->
 
 	<build>
 		<pluginManagement>
@@ -36,7 +35,7 @@
 				<plugin>
 					<groupId>org.eclipse.scout</groupId>
 					<artifactId>eclipse-settings-maven-plugin</artifactId>
-					<version>3.0.2</version>
+					<version>3.0.3</version>
 					<dependencies>
 						<!-- ... add dependencies here: source for the .settings files ... -->
 						<!--end::plugin[] -->
