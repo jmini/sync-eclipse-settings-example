@@ -552,8 +552,8 @@ Do you want to improve this page? Please <a href="https://github.com/jmini/sync-
 <h2 id="description"><a class="anchor" href="#description"></a>Description</h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>This repository demonstrates how you can use the goal <code>eclipse-settings</code> of the <a href="https://mvnrepository.com/artifact/org.eclipse.scout/eclipse-settings-maven-plugin">eclipse-settings-maven-plugin</a> to synchronize the eclipse-settings files between multiple project.
-The <code>*.prefs</code> files stored inside a maven artifact are extracted each <code>.setting</code> folder of each project using the maven plugin.</p>
+<p>This repository demonstrates how you can use the goal <code>eclipse-settings</code> of the <a href="https://mvnrepository.com/artifact/org.eclipse.scout/eclipse-settings-maven-plugin">eclipse-settings-maven-plugin</a> (<a href="https://github.com/BSI-Business-Systems-Integration-AG/eclipse-settings-maven-plugin">GitHub</a>) to synchronize the eclipse-settings files between multiple projects.
+The <code>*.prefs</code> files stored inside a maven artifact are extracted into each <code>.setting</code> folder of each project using the maven plugin.</p>
 </div>
 <div class="paragraph">
 <p>This repository provides some example projects that use the maven plugin.
@@ -586,7 +586,7 @@ They are located in the <a href="https://github.com/jmini/sync-eclipse-settings-
 </div>
 </li>
 <li>
-<p>another aggregator artifact <a href="https://github.com/jmini/sync-eclipse-settings-example/blob/master/example-use/other/pom.xml">other pom file</a> that has not <code>parent</code> as parent pom.</p>
+<p>another aggregator artifact <a href="https://github.com/jmini/sync-eclipse-settings-example/blob/master/example-use/other/pom.xml">other pom file</a> that doesn&#8217;t have <code>parent</code> as parent pom.</p>
 </li>
 </ul>
 </div>
@@ -678,7 +678,7 @@ To build <code>project2</code> you need to have installed <code>project1</code> 
 <div class="paragraph">
 <p>The artifacts can of course be imported into Eclipse IDE.
 Each of them is a valid Eclipse project.
-The project metadata were added to the git repository (<code>.project</code> and <code>.classpath</code> files):</p>
+The requested metadata files (<code>.project</code> and <code>.classpath</code>) are contained in the git repository:</p>
 </div>
 <div class="imageblock">
 <div class="content">
@@ -701,7 +701,7 @@ You should see the list of projects and you can materialize them in the workspac
 <div class="sect3">
 <h4 id="setup"><a class="anchor" href="#setup"></a>Setup</h4>
 <div class="paragraph">
-<p>The parent project is configured to generate 4 <code>*.prefs</code> files inside each <code>.settings</code> folder.</p>
+<p>The parent project is configured to generate four <code>*.prefs</code> files inside each <code>.settings</code> folder.</p>
 </div>
 <div class="ulist">
 <ul>
@@ -731,7 +731,7 @@ You can also refer directly to the <code>pluginManagement</code> section of the 
 <pre class="CodeRay highlight"><code data-lang="xml"><span class="tag">&lt;plugin&gt;</span>
         <span class="tag">&lt;groupId&gt;</span>org.eclipse.scout<span class="tag">&lt;/groupId&gt;</span>
         <span class="tag">&lt;artifactId&gt;</span>eclipse-settings-maven-plugin<span class="tag">&lt;/artifactId&gt;</span>
-        <span class="tag">&lt;version&gt;</span>3.0.2<span class="tag">&lt;/version&gt;</span>
+        <span class="tag">&lt;version&gt;</span>3.0.3<span class="tag">&lt;/version&gt;</span>
         <span class="tag">&lt;dependencies&gt;</span>
                 <span class="comment">&lt;!-- ... add dependencies here: source for the .settings files ... --&gt;</span>
         <span class="tag">&lt;/dependencies&gt;</span>
@@ -840,21 +840,21 @@ The maven log looks like this:</p>
 [INFO] Building parent 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ parent ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.3:eclipse-settings (default-cli) @ parent ---
 [INFO] Project configured.
 [INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] Building project1 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ project1 ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.3:eclipse-settings (default-cli) @ project1 ---
 [INFO] Project configured.
 [INFO]
 [INFO] ------------------------------------------------------------------------
 [INFO] Building project2 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ project2 ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.3:eclipse-settings (default-cli) @ project2 ---
 [INFO] Project configured.
 [INFO] ------------------------------------------------------------------------
 [INFO] Reactor Summary:
@@ -890,7 +890,7 @@ The maven log for the <code>skipped1</code> artifact looks like this:</p>
 [INFO] Building skipped1 1.0
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ skipped1 ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.3:eclipse-settings (default-cli) @ skipped1 ---
 [INFO] Skipping project settings configuration.
 [INFO]</pre>
 </div>
@@ -905,7 +905,7 @@ The maven log for the <code>other</code> artifact looks like this:</p>
 [INFO] Building other 1.9
 [INFO] ------------------------------------------------------------------------
 [INFO]
-[INFO] --- eclipse-settings-maven-plugin:3.0.2:eclipse-settings (default-cli) @ other ---
+[INFO] --- eclipse-settings-maven-plugin:3.0.3:eclipse-settings (default-cli) @ other ---
 [WARNING] No settings specified.
 [ERROR] Project not configured.</pre>
 </div>
@@ -958,7 +958,7 @@ Select the <a href="https://github.com/jmini/sync-eclipse-settings-example/blob/
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-02-04 10:28:07 CET
+Last updated 2018-02-01 08:04:03 CET
 </div>
 </div>
 </body>
