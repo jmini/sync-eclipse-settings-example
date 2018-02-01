@@ -18,6 +18,16 @@
                 <enabled>false</enabled>
             </snapshots>
         </pluginRepository>
+        <pluginRepository>
+            <id>eclipse.releases</id>
+            <url>https://repo.eclipse.org/content/groups/releases/</url>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+        </pluginRepository>
     </pluginRepositories>
 
     <properties>
